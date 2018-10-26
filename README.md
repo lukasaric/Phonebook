@@ -1,4 +1,3 @@
 # Phonebook
-Simple Phonebook application
 ## Frameworks:
-Express js / Vue js
+Express.js / Vue.js
