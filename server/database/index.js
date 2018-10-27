@@ -6,7 +6,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   host: process.env.DB_HOST,
   dialect: process.env.DB_DIALECT,
   storage: process.env.DB_STORAGE,
-  logging: false
+  logging: true,
+  port: process.env.DB_PORT
 });
 
 const db = {
@@ -16,9 +17,7 @@ const db = {
 };
 
 Object.keys(db).forEach(modelName => {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
-  }
+  if (db[modelName].associate) db[modelName].associate(db);
 });
 
 db.sequelize = sequelize;
