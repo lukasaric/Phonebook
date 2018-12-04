@@ -1,13 +1,14 @@
 <template>
-  <h1> {{ text }}</h1>
+  <div>
+    <h1>Register</h1>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'home',
+  name: 'register',
   data() {
     return {
-      text: 'Welcome'
     };
   }
 };
