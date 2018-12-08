@@ -17,12 +17,12 @@ const router = new Router({
       component: Contacts
     }, {
       path: '/addContact',
-      name: 'addContacts',
+      name: 'addContact',
       component: addContact
     },
     {
       path: '/editContact',
-      name: 'editContacts',
+      name: 'editContact',
       component: editContact
     }, {
       path: '/details',

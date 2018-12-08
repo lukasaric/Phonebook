@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <v-toolbar flat color="white">
-      <v-toolbar-title class="tableTitle">My contacts</v-toolbar-title>
+    <v-toolbar flat dark color="teal lighten-5">
+      <v-toolbar-title class="tableTitle"> My contacts </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="deleteAll" color="#07889B" flat outline>Delete all</v-btn>
-      <v-btn @click="addContact" outline color="#07889B" dark class="mb-2">Add contact</v-btn>
+      <v-btn @click="deleteAll" color="#07889B" flat outline > Delete all </v-btn>
+      <v-btn @click="addContact" outline color="#07889B" dark class="mb-2"> Add contact </v-btn>
     </v-toolbar>
     <v-data-table :headers="headers" :items="contacts" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
@@ -20,21 +20,11 @@
         </td>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
-            <v-card-text>Are you sure you want to delete this item?</v-card-text>
+            <v-card-text> Are you sure you want to delete this item? </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn
-                @click="checkDialog = false"
-                color="#07889B"
-                flat>
-                No
-              </v-btn>
-              <v-btn
-                @click="deleteItem(props.item)"
-                color="#07889B"
-                flat>
-                Yes
-              </v-btn>
+              <v-btn @click="checkDialog = false" color="#07889B" flat> No </v-btn>
+              <v-btn @click="deleteItem(props.item)" color="#07889B" flat> Yes </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -76,13 +66,13 @@ export default {
   },
   methods: {
     addContact() {
-      this.$router.push({ path: '/addContact' });
+      this.$router.push({ name: 'addContact' });
     },
     editItem(item) {
-      this.$router.push({ path: '/editContact' });
+      this.$router.push({ name: 'editContact' });
     },
     itemDetails(item) {
-      this.$router.push({ path: '/details' });
+      this.$router.push({ name: 'details' });
     },
     deleteItem(item) {
       const index = this.contacts.indexOf(item);
@@ -123,5 +113,6 @@ table.v-table tbody tr td {
 }
 .tableTitle {
   font-size: 25px;
+  color: #07889B
 }
 </style>
