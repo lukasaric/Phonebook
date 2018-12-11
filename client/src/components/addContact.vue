@@ -112,7 +112,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumbers: [ { number: null, type: null, isMain: true } ]
+        phoneNumbers: [ { number: '', type: null, isMain: true } ]
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
@@ -133,9 +133,9 @@ export default {
   methods: {
     submit() {
       this.$validator.validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
-            contactService.addContact()
+            contactService.addContact(this.contact)
               .then(() => this.$router.push({ name: 'contacts' }))
               .catch(error => console.log(error));
           }
@@ -149,7 +149,7 @@ export default {
       this.$router.push({ name: 'contacts' });
     },
     addNumber() {
-      this.contact.phoneNumbers.push({ number: null, type: null, isMain: false });
+      this.contact.phoneNumbers.push({ number: '', type: null, isMain: false });
     },
     deleteNumber(index) {
       this.contact.phoneNumbers.splice(index, 1);

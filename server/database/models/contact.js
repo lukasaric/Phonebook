@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
-      unique: true,
       validate: {
         isEmail: true
       }
@@ -15,8 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Contact.associate = (models) => {
     Contact.belongsToMany(models.PhoneNumber, {
-      through: 'numberContact',
-      foreignKey: 'contact_fk'
+      through: {
+        model: 'numberContact',
+        unique: false
+      },
+      foreignKey: 'contact_fk',
+      constraints: false
     });
     Contact.belongsTo(models.User, { foreignKey: 'user_fk' });
   };

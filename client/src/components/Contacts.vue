@@ -11,12 +11,11 @@
         <td class="text-xs-left">{{ props.item.firstName }}</td>
         <td class="text-xs-left">{{ props.item.lastName }}</td>
         <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.isMain }}</td>
-        <td class="text-xs-left">{{ props.item.number }}</td>
+        <td class="text-xs-left">{{ props.item.phoneNumbers.number }}</td>
         <td class="justify-center layout px-0">
-          <v-icon @click="itemDetails(props.item)" color="#07889B"> fa-file-alt </v-icon>
-          <v-icon @click="editItem(props.item)" class="editBtn"> edit </v-icon>
-          <v-icon @click="dialog=true" color="red"> delete </v-icon>
+          <v-icon @click="itemDetails" color="#07889B"> fa-file-alt </v-icon>
+          <v-icon @click="editItem" class="editBtn"> edit </v-icon>
+          <v-icon @click="dialog=true" color="#ff8700"> delete </v-icon>
         </td>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
@@ -44,34 +43,24 @@ export default {
         { text: 'Firstname', value: 'firstName' },
         { text: 'Lastname', value: 'lastName' },
         { text: 'Email', value: 'email' },
-        { text: 'Primary', value: 'isMain' },
-        { text: 'Number', value: 'numbers' }
+        { text: 'Primary number', value: 'number' }
       ],
-      editedIndex: -1,
-      editedItem: {
+      contacts: [ {
         firstName: '',
         lastName: '',
         email: '',
-        numbers: []
-      },
-      defaultItem: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        numbers: []
-      },
-      contacts: [],
-      phoneNumber: { number: 0, isMain: false }
+        phoneNumbers: [ { number: '', type: null, isMain: true } ]
+      }]
     };
   },
   methods: {
     addContact() {
       this.$router.push({ name: 'addContact' });
     },
-    editItem(item) {
+    editItem() {
       this.$router.push({ name: 'editContact' });
     },
-    itemDetails(item) {
+    itemDetails() {
       this.$router.push({ name: 'details' });
     },
     deleteItem(item) {

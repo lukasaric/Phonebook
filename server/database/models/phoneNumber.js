@@ -3,8 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
   const PhoneNumber = sequelize.define('PhoneNumber', {
     number: {
-      type: DataTypes.INTEGER,
-      unique: true
+      type: DataTypes.STRING
     },
     numberType: {
       type: DataTypes.ENUM,
@@ -15,8 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 
   PhoneNumber.associate = (models) => {
     PhoneNumber.belongsToMany(models.Contact, {
-      through: 'numberContact',
-      foreignKey: 'phoneNumber_fk'
+      through: {
+        model: 'numberContact',
+        unique: false
+      },
+      foreignKey: 'phoneNumber_fk',
+      constraints: false
     });
   };
 
