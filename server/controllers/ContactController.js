@@ -8,7 +8,7 @@ module.exports = {
     return Contact.create({ firstName, lastName, email })
       .then(contact => {
         return PhoneNumber.bulkCreate(phoneNumbers.map(phoneNumber => {
-          const { number, type: numberType, isMain } = phoneNumber;
+          const { number, numberType, isMain } = phoneNumber;
           return { number, numberType, isMain };
         }), {returning: true})
           .then(numbers => contact.setPhoneNumbers(numbers));
@@ -16,7 +16,22 @@ module.exports = {
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
   },
-  GetAllContacts: (req, res) => {
+  GetAllContacts: (req, res, next) => {
+    return Contact.findAll({ include: [ PhoneNumber ] })
+      .then(contacts => {
+        return contacts.map(contact => {
+          const { id, firstName, lastName, email } = contact.dataValues;
+          const numbers = contact.dataValues.PhoneNumbers.map(phoneNumber => {
+            const { id, number, numberType, isMain } = phoneNumber;
+            return { id, number, numberType, isMain };
+          });
+          return { id, firstName, lastName, email, phoneNumbers: numbers };
+        });
+      })
+      .then(contact => {
+        res.status(200).json(contact);
+      })
+      .catch(err => next(err));
   },
   GetContact: (req, res) => {
   },

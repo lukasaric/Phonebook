@@ -50,7 +50,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumbers: [ { id: null, number: '', type: null, isMain: true } ]
+        phoneNumbers: [ { id: null, number: '', numberType: null, isMain: true } ]
       }]
     };
   },
@@ -72,7 +72,7 @@ export default {
     deleteAll() {
       contactService.DeleteAllContacts()
         .then(res => {
-          // ...
+          console.log(res);
         });
       this.contacts = [];
       this.checkDialog = false;
@@ -81,7 +81,7 @@ export default {
   created() {
     contactService.GetAllContacts()
       .then(res => {
-        // data
+        console.log(res);
       });
   }
 };

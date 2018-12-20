@@ -65,7 +65,7 @@
           <v-select
             v-validate="'required'"
             :items="types"
-            v-model="number.type"
+            v-model="number.numberType"
             :error-messages="errors.collect('select')"
             class="typeField"
             label="Type"
@@ -112,7 +112,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumbers: [ { number: '', type: null, isMain: true } ]
+        phoneNumbers: [ { number: '', numberType: null, isMain: true } ]
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
@@ -149,7 +149,7 @@ export default {
       this.$router.push({ name: 'contacts' });
     },
     addNumber() {
-      this.contact.phoneNumbers.push({ number: '', type: null, isMain: false });
+      this.contact.phoneNumbers.push({ number: '', numberType: null, isMain: false });
     },
     deleteNumber(index) {
       this.contact.phoneNumbers.splice(index, 1);
