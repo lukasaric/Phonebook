@@ -46,10 +46,11 @@ export default {
         { text: 'Primary number', value: 'number' }
       ],
       contacts: [ {
+        id: null,
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumbers: [ { number: '', type: null, isMain: true } ]
+        phoneNumbers: [ { id: null, number: '', type: null, isMain: true } ]
       }]
     };
   },
@@ -69,9 +70,19 @@ export default {
       console.log(contactService);
     },
     deleteAll() {
+      contactService.DeleteAllContacts()
+        .then(res => {
+          // ...
+        });
       this.contacts = [];
       this.checkDialog = false;
     }
+  },
+  created() {
+    contactService.GetAllContacts()
+      .then(res => {
+        // data
+      });
   }
 };
 </script>

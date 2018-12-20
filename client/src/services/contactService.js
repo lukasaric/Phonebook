@@ -9,5 +9,11 @@ export default {
   },
   EditContact(data) {
     return Api.post('/contacts/editContact', data);
+  },
+  GetAllContacts() {
+    return Api.get('/contacts/GetAll');
+  },
+  DeleteAllContacts() {
+    return Api.Delete('/contacts/DeleteAll');
   }
 };

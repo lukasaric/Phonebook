@@ -13,14 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   PhoneNumber.associate = (models) => {
-    PhoneNumber.belongsToMany(models.Contact, {
-      through: {
-        model: 'numberContact',
-        unique: false
-      },
-      foreignKey: 'phoneNumber_fk',
-      constraints: false
-    });
+    PhoneNumber.belongsToMany(models.Contact, { through: 'numberContact' });
   };
 
   return PhoneNumber;

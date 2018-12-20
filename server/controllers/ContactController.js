@@ -1,33 +1,29 @@
 'use-strict';
+
 const Contact = require('../database').Contact;
 const PhoneNumber = require('../database').PhoneNumber;
 
 module.exports = {
-  Add: (req, res) => {
-    const contact = req.body;
-    Contact.create({
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      email: contact.email
-    }, { raw: true })
-      .then(contactDb => {
-        contact.phoneNumbers.forEach(el => {
-          PhoneNumber.create({
-            number: el.number, numberType: el.type, isMain: el.isMain
-          }, { raw: true })
-            .then(numberDb => {
-              contactDb.addPhoneNumber(numberDb);
-              numberDb.addContact(contactDb);
-            })
-            .catch((err) => console.log(err));
-        });
-      }).then(() => {
-        return res.status(200);
-      }).catch(() => res.status(500));
+  AddContact: ({ body: { firstName, lastName, email, phoneNumbers } }, res, next) => {
+    return Contact.create({ firstName, lastName, email })
+      .then(contact => {
+        return PhoneNumber.bulkCreate(phoneNumbers.map(phoneNumber => {
+          const { number, type: numberType, isMain } = phoneNumber;
+          return { number, numberType, isMain };
+        }), {returning: true})
+          .then(numbers => contact.setPhoneNumbers(numbers));
+      })
+      .then(() => res.sendStatus(200))
+      .catch(err => next(err));
   },
-  Delete: (req, res) => {
-
+  GetAllContacts: (req, res) => {
   },
-  Edit: (req, res) => {
+  GetContact: (req, res) => {
+  },
+  DeleteContact: (req, res) => {
+  },
+  EditContact: (req, res) => {
+  },
+  DeleteAllContacts: (req, res) => {
   }
 };
