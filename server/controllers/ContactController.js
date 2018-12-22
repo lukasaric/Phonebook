@@ -28,8 +28,8 @@ module.exports = {
           return { id, firstName, lastName, email, phoneNumbers: numbers };
         });
       })
-      .then(contact => {
-        res.status(200).json(contact);
+      .then(contacts => {
+        res.status(200).json(contacts);
       })
       .catch(err => next(err));
   },

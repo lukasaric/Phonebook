@@ -11,7 +11,7 @@
         <td class="text-xs-left">{{ props.item.firstName }}</td>
         <td class="text-xs-left">{{ props.item.lastName }}</td>
         <td class="text-xs-left">{{ props.item.email }}</td>
-        <td class="text-xs-left">{{ props.item.phoneNumbers.number }}</td>
+        <td class="text-xs-left">{{ props.item.primaryNumber }}</td>
         <td class="justify-center layout px-0">
           <v-icon @click="itemDetails" color="#07889B"> fa-file-alt </v-icon>
           <v-icon @click="editItem" class="editBtn"> edit </v-icon>
@@ -22,7 +22,7 @@
             <v-card-text> Are you sure you want to delete this item? </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn @click="checkDialog = false" color="#07889B" flat> No </v-btn>
+              <v-btn @click="dialog = false" color="#07889B" flat> No </v-btn>
               <v-btn @click="deleteItem(props.item)" color="#07889B" flat> Yes </v-btn>
             </v-card-actions>
           </v-card>
@@ -45,13 +45,7 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Primary number', value: 'number' }
       ],
-      contacts: [ {
-        id: null,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumbers: [ { id: null, number: '', numberType: null, isMain: true } ]
-      }]
+      contacts: []
     };
   },
   methods: {
@@ -64,10 +58,13 @@ export default {
     itemDetails() {
       this.$router.push({ name: 'details' });
     },
-    deleteItem(item) {
-      const index = this.contacts.indexOf(item);
-      this.contacts.splice(index, 1);
-      console.log(contactService);
+    deleteItem(contact) {
+      contactService.DeleteContact(contact.id)
+        .then(res => {
+          // res
+        });
+      // const index = this.contacts.indexOf(item);
+      // this.contacts.splice(index, 1);
     },
     deleteAll() {
       contactService.DeleteAllContacts()
@@ -81,7 +78,15 @@ export default {
   created() {
     contactService.GetAllContacts()
       .then(res => {
-        console.log(res);
+        const contacts = res.data;
+        contacts.forEach(contact => {
+          contact.phoneNumbers.forEach(phoneNumber => {
+            if (phoneNumber.isMain === true) {
+              Object.assign(contact, { primaryNumber: phoneNumber.number });
+            }
+          });
+          this.contacts.push(contact);
+        });
       });
   }
 };
@@ -89,10 +94,10 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 80%;
+  max-width: 70%;
 }
 .editBtn {
-  margin-right: 20px;
+  margin: 20px;
   color: #00BCD4;
 }
 .addBtn {
