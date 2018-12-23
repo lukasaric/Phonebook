@@ -61,10 +61,10 @@ export default {
     deleteItem(contact) {
       contactService.DeleteContact(contact.id)
         .then(res => {
-          // res
+          const index = this.contacts.indexOf(contact);
+          this.contacts.splice(index, 1);
+          this.dialog = false;
         });
-      // const index = this.contacts.indexOf(item);
-      // this.contacts.splice(index, 1);
     },
     deleteAll() {
       contactService.DeleteAllContacts()

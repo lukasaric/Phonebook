@@ -5,7 +5,7 @@ export default {
     return Api.post('/contacts/addContact', data);
   },
   DeleteContact(data) {
-    return Api.Delete('/contacts/deleteContact', data);
+    return Api.delete('/contacts/deleteContact', { params: { id: data } });
   },
   EditContact(data) {
     return Api.post('/contacts/editContact', data);
@@ -14,6 +14,6 @@ export default {
     return Api.get('/contacts/GetAll');
   },
   DeleteAllContacts() {
-    return Api.Delete('/contacts/DeleteAll');
+    return Api.post('/contacts/DeleteAll');
   }
 };

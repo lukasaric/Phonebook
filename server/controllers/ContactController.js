@@ -33,9 +33,22 @@ module.exports = {
       })
       .catch(err => next(err));
   },
-  GetContact: (req, res) => {
+  GetContact: ({ body: { id } }, res, next) => {
+    return Contact.findById({ where: { id }, include: [ PhoneNumber ] })
+      .then(contact => {
+        // Object.assign(contact, { id, firstName, lastName, email, PhoneNumbers });
+      });
   },
-  DeleteContact: (req, res) => {
+  DeleteContact: ({ query: { id } }, res, next) => {
+    return Contact.find({ where: { id }, include: [ PhoneNumber ] })
+      .then(contact => {
+        contact.dataValues.PhoneNumbers.forEach(number => {
+          PhoneNumber.destroy({ where: { id: number.dataValues.id } });
+        });
+        contact.destroy();
+      })
+      .then(() => res.sendStatus(200))
+      .catch(err => next(err));
   },
   EditContact: (req, res) => {
   },
