@@ -13,6 +13,9 @@ export default {
   GetAllContacts() {
     return Api.get('/contacts/GetAll');
   },
+  GetContact(id) {
+    return Api.get(`/contacts/GetContact/${id}`);
+  },
   DeleteAllContacts() {
     return Api.post('/contacts/DeleteAll');
   }

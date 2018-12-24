@@ -49,7 +49,7 @@
             <v-icon dark>add</v-icon>
           </v-btn>
         </div>
-        <v-layout v-for="(number, index) in contact.phoneNumbers" :key="index" row wrap>
+        <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
           <v-text-field
             v-validate="'required|numeric'"
             v-model="number.number"
@@ -112,7 +112,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        phoneNumbers: [ { number: '', numberType: null, isMain: true } ]
+        PhoneNumbers: [ { number: '', numberType: null, isMain: true } ]
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
@@ -142,17 +142,14 @@ export default {
         });
     },
     cancel() {
-      this.contact.firstName = '';
-      this.contact.lastName = '';
-      this.contact.email = '';
       this.$validator.reset();
       this.$router.push({ name: 'contacts' });
     },
     addNumber() {
-      this.contact.phoneNumbers.push({ number: '', numberType: null, isMain: false });
+      this.contact.PhoneNumbers.push({ number: '', numberType: null, isMain: false });
     },
     deleteNumber(index) {
-      this.contact.phoneNumbers.splice(index, 1);
+      this.contact.PhoneNumbers.splice(index, 1);
     }
   },
   mounted() {

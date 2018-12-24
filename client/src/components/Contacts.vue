@@ -14,7 +14,7 @@
         <td class="text-xs-left">{{ props.item.primaryNumber }}</td>
         <td class="justify-center layout px-0">
           <v-icon @click="itemDetails" color="#07889B"> fa-file-alt </v-icon>
-          <v-icon @click="editItem" class="editBtn"> edit </v-icon>
+          <v-icon @click="editItem(props.item.id)" class="editBtn"> edit </v-icon>
           <v-icon @click="dialog=true" color="#ff8700"> delete </v-icon>
         </td>
         <v-dialog v-model="dialog" max-width="290">
@@ -52,8 +52,8 @@ export default {
     addContact() {
       this.$router.push({ name: 'addContact' });
     },
-    editItem() {
-      this.$router.push({ name: 'editContact' });
+    editItem(id) {
+      this.$router.push({ name: 'editContact', params: { id } });
     },
     itemDetails() {
       this.$router.push({ name: 'details' });

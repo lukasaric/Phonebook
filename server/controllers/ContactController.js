@@ -4,10 +4,10 @@ const Contact = require('../database').Contact;
 const PhoneNumber = require('../database').PhoneNumber;
 
 module.exports = {
-  AddContact: ({ body: { firstName, lastName, email, phoneNumbers } }, res, next) => {
+  AddContact: ({ body: { firstName, lastName, email, PhoneNumbers } }, res, next) => {
     return Contact.create({ firstName, lastName, email })
       .then(contact => {
-        return PhoneNumber.bulkCreate(phoneNumbers.map(phoneNumber => {
+        return PhoneNumber.bulkCreate(PhoneNumbers.map(phoneNumber => {
           const { number, numberType, isMain } = phoneNumber;
           return { number, numberType, isMain };
         }), {returning: true})
@@ -28,16 +28,24 @@ module.exports = {
           return { id, firstName, lastName, email, phoneNumbers: numbers };
         });
       })
-      .then(contacts => {
-        res.status(200).json(contacts);
-      })
+      .then(contacts => res.status(200).json(contacts))
       .catch(err => next(err));
   },
-  GetContact: ({ body: { id } }, res, next) => {
-    return Contact.findById({ where: { id }, include: [ PhoneNumber ] })
+  GetContact: ({ params: { id } }, res, next) => {
+    return Contact.find({ where: { id }, include: [ PhoneNumber ] })
       .then(contact => {
-        // Object.assign(contact, { id, firstName, lastName, email, PhoneNumbers });
-      });
+        const { id, firstName, lastName, email, PhoneNumbers } = contact.dataValues;
+        return { id, firstName, lastName, email, PhoneNumbers };
+      })
+      .then(contact => {
+        contact.PhoneNumbers = contact.PhoneNumbers.map(phoneNumber => {
+          const { id, number, numberType, isMain } = phoneNumber;
+          return { id, number, numberType, isMain };
+        });
+        return contact;
+      })
+      .then(reducedContact => res.status(200).json(reducedContact))
+      .catch(err => next(err));
   },
   DeleteContact: ({ query: { id } }, res, next) => {
     return Contact.find({ where: { id }, include: [ PhoneNumber ] })
@@ -50,8 +58,8 @@ module.exports = {
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
   },
-  EditContact: (req, res) => {
+  EditContact: ({ body: { id, firstName, lastName, email, PhoneNumbers } }, res, next) => {
   },
-  DeleteAllContacts: (req, res) => {
+  DeleteAllContacts: (req, res, next) => {
   }
 };
