@@ -59,6 +59,22 @@ module.exports = {
       .catch(err => next(err));
   },
   EditContact: ({ body: { id, firstName, lastName, email, PhoneNumbers } }, res, next) => {
+    return Contact.find({ where: { id }, include: [ PhoneNumber ] })
+      .then(contact => {
+        contact.dataValues.PhoneNumbers.forEach(number => {
+          PhoneNumber.destroy({ where: { id: number.dataValues.id } });
+        });
+        contact.update({ firstName, lastName, email })
+          .then(contact => {
+            return PhoneNumber.bulkCreate(PhoneNumbers.map(phoneNumber => {
+              const { number, numberType, isMain } = phoneNumber;
+              return { number, numberType, isMain };
+            }), {returning: true})
+              .then(numbers => contact.setPhoneNumbers(numbers));
+          });
+      })
+      .then(() => res.sendStatus(200))
+      .catch(err => next(err));
   },
   DeleteAllContacts: (req, res, next) => {
     const options = { where: {}, truncate: { cascade: true } };
