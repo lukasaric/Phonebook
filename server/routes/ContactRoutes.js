@@ -8,6 +8,6 @@ router.delete('/deleteContact', ContactController.DeleteContact);
 router.post('/editContact', ContactController.EditContact);
 router.get('/GetAll', ContactController.GetAllContacts);
 router.get('/GetContact/:id/', ContactController.GetContact);
-router.delete('DeleteAll', ContactController.DeleteAllContacts);
+router.post('/DeleteAll', ContactController.DeleteAllContacts);
 
 module.exports = router;

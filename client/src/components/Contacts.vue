@@ -69,10 +69,9 @@ export default {
     deleteAll() {
       contactService.DeleteAllContacts()
         .then(res => {
-          console.log(res);
+          this.contacts = [];
+          this.checkDialog = false;
         });
-      this.contacts = [];
-      this.checkDialog = false;
     }
   },
   created() {

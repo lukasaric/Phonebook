@@ -61,5 +61,10 @@ module.exports = {
   EditContact: ({ body: { id, firstName, lastName, email, PhoneNumbers } }, res, next) => {
   },
   DeleteAllContacts: (req, res, next) => {
+    const options = { where: {}, truncate: { cascade: true } };
+    return Contact.destroy(options)
+      .then(() => PhoneNumber.destroy(options))
+      .then(() => res.sendStatus(200))
+      .catch(err => next(err));
   }
 };
