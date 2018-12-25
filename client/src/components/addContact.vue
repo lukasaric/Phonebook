@@ -83,7 +83,7 @@
             color="#07889B"
             required>
           </v-checkbox>
-          <v-icon v-if="index>0" @click="deleteNumber(index)" color="#ff8700"> delete </v-icon>
+          <v-icon v-if="index > 0" @click="deleteNumber(index)" color="#ff8700"> delete </v-icon>
         </v-layout>
         <v-btn @click="submit" color="#07889B" flat outline>submit</v-btn>
         <v-btn @click="dialog = true" flat outline>cancel</v-btn>
@@ -116,6 +116,7 @@ export default {
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
+      counter: 0,
       dictionary: {
         attributes: { email: 'E-mail Address', numeric: 'Phone number' },
         custom: {
@@ -135,9 +136,17 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            contactService.addContact(this.contact)
-              .then(() => this.$router.push({ name: 'contacts' }))
-              .catch(error => console.log(error));
+            this.contact.PhoneNumbers.forEach(el => {
+              if (el.isMain === true) this.counter++;
+            });
+            if (this.counter === 1) {
+              contactService.addContact(this.contact)
+                .then(() => this.$router.push({ name: 'contacts' }))
+                .catch(error => console.log(error));
+            } else {
+              this.counter = 0;
+              console.log('There must be at least one primary number');
+            }
           }
         });
     },

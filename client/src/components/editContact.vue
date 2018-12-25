@@ -119,6 +119,7 @@ export default {
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
+      counter: 0,
       dictionary: {
         attributes: { email: 'E-mail Address', numeric: 'Phone number' },
         custom: {
@@ -138,9 +139,18 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            contactService.EditContact(this.contact)
-              .then(() => this.$router.push({ name: 'contacts' }))
-              .catch(err => console.log(err));
+            this.contact.PhoneNumbers.forEach(el => {
+              if (el.isMain === true) this.counter++;
+            });
+            console.log(this.counter);
+            if (this.counter === 1) {
+              contactService.EditContact(this.contact)
+                .then(() => this.$router.push({ name: 'contacts' }))
+                .catch(err => console.log(err));
+            } else {
+              this.counter = 0;
+              console.log('There must be at least one primary number');
+            }
           }
         });
     },
