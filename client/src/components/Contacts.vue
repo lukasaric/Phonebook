@@ -3,10 +3,20 @@
     <v-toolbar flat dark color="teal lighten-5">
       <v-toolbar-title class="tableTitle"> My contacts </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+        light
+        class="searchBox"
+        color="#07889B">
+      </v-text-field>
       <v-btn @click="deleteAll" color="#07889B" flat outline > Delete all </v-btn>
       <v-btn @click="addContact" outline color="#07889B" dark class="mb-2"> Add contact </v-btn>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="contacts" hide-actions class="elevation-1">
+    <v-data-table :headers="headers" :items="contacts" :search="search" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.firstName }}</td>
         <td class="text-xs-left">{{ props.item.lastName }}</td>
@@ -38,6 +48,7 @@ import contactService from '@/services/contactService';
 export default {
   data() {
     return {
+      search: '',
       dialog: false,
       headers: [
         { text: 'Firstname', value: 'firstName' },
@@ -118,5 +129,9 @@ table.v-table tbody tr td {
 .tableTitle {
   font-size: 25px;
   color: #07889B
+}
+.searchBox {
+  margin-right: 20px;
+  max-width: 400px;
 }
 </style>
