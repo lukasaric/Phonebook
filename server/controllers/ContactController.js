@@ -2,6 +2,7 @@
 
 const Contact = require('../database').Contact;
 const PhoneNumber = require('../database').PhoneNumber;
+const { sequelize } = require('../database');
 
 module.exports = {
   AddContact: ({ body: { firstName, lastName, email, PhoneNumbers } }, res, next) => {
@@ -77,9 +78,7 @@ module.exports = {
       .catch(err => next(err));
   },
   DeleteAllContacts: (req, res, next) => {
-    const options = { where: {}, truncate: { cascade: true } };
-    return Contact.destroy(options)
-      .then(() => PhoneNumber.destroy(options))
+    return sequelize.sync({ force: true })
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
   }
