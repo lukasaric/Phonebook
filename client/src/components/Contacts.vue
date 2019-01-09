@@ -13,7 +13,7 @@
         class="searchBox"
         color="#07889B">
       </v-text-field>
-      <v-btn @click="deleteAll" color="#07889B" flat outline > Delete all </v-btn>
+      <v-btn @click="delAllDialog=true" color="#07889B" flat outline > Delete all </v-btn>
       <v-btn @click="addContact" outline color="#07889B" dark class="mb-2"> Add contact </v-btn>
     </v-toolbar>
     <v-data-table :headers="headers" :items="contacts" :search="search" hide-actions class="elevation-1">
@@ -29,11 +29,21 @@
         </td>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
-            <v-card-text> Are you sure you want to delete this item? </v-card-text>
+            <v-card-text> Are you sure you want to delete this contact? </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn @click="dialog = false" color="#07889B" flat> No </v-btn>
               <v-btn @click="deleteItem(props.item)" color="#07889B" flat> Yes </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="delAllDialog" max-width="290">
+          <v-card>
+            <v-card-text> Are you sure you want to delete all contacts? </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="delAllDialog = false" color="#07889B" flat> No </v-btn>
+              <v-btn @click="deleteAll" color="#07889B" flat> Yes </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -44,12 +54,14 @@
 
 <script>
 import contactService from '@/services/contactService';
+import { AsYouType } from 'libphonenumber-js';
 
 export default {
   data() {
     return {
       search: '',
       dialog: false,
+      delAllDialog: false,
       headers: [
         { text: 'Firstname', value: 'firstName' },
         { text: 'Lastname', value: 'lastName' },
@@ -81,7 +93,7 @@ export default {
       contactService.DeleteAllContacts()
         .then(res => {
           this.contacts = [];
-          this.checkDialog = false;
+          this.delAllDialog = false;
         });
     }
   },
@@ -92,7 +104,8 @@ export default {
         contacts.forEach(contact => {
           contact.phoneNumbers.forEach(phoneNumber => {
             if (phoneNumber.isMain === true) {
-              Object.assign(contact, { primaryNumber: phoneNumber.number });
+              const number = new AsYouType('US').input(phoneNumber.number);
+              Object.assign(contact, { primaryNumber: number });
             }
           });
           this.contacts.push(contact);

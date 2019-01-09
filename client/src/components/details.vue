@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout class="mainContainer">
     <v-flex xs12 sm6 offset-sm3>
       <v-card class="detailBox">
         <v-toolbar flat light color="teal lighten-5">
@@ -20,6 +20,18 @@
             </v-flex>
           </v-layout>
           <v-divider light></v-divider>
+          <v-list two-line>
+            <v-list-tile-content>
+              <v-list-tile-title> Primary number: </v-list-tile-title>
+              <v-list-tile-sub-title>
+                <v-icon>far fa-star</v-icon>
+                {{ contact.primaryNumber.number }}
+              </v-list-tile-sub-title>
+              <v-list-tile-sub-title> {{ contact.primaryNumber.numberType }} </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list>
+          <v-divider light></v-divider>
+          <v-list><v-list-tile-title> All numbers: </v-list-tile-title></v-list>
           <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
             <v-list two-line>
               <v-list-tile-content>
@@ -40,6 +52,7 @@
 
 <script>
 import contactService from '@/services/contactService';
+import { AsYouType } from 'libphonenumber-js';
 
 export default {
   props: {
@@ -66,12 +79,22 @@ export default {
   },
   created() {
     contactService.GetContact(this.id)
-      .then(res => Object.assign(this.contact, res.data))
+      .then(res => {
+        Object.assign(this.contact, res.data);
+        this.contact.PhoneNumbers.forEach(phoneNumber => {
+          const number = new AsYouType('US').input(phoneNumber.number);
+          const primaryNumber = { number, numberType: phoneNumber.numberType };
+          if (phoneNumber.isMain === true) Object.assign(this.contact, { primaryNumber });
+          phoneNumber.number = number;
+        });
+      })
       .catch(err => console.log(err));
-    console.log(this.contact);
   }
 };
 </script>
 
 <style scoped>
+.detailBox {
+  font-size: 16px;
+}
 </style>

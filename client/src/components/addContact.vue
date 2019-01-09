@@ -136,8 +136,8 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            this.contact.PhoneNumbers.forEach(el => {
-              if (el.isMain === true) this.counter++;
+            this.contact.PhoneNumbers.forEach(contact => {
+              if (contact.isMain === true) this.counter++;
             });
             if (this.counter === 1) {
               contactService.addContact(this.contact)
