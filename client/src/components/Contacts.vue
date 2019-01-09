@@ -23,7 +23,7 @@
         <td class="text-xs-left">{{ props.item.email }}</td>
         <td class="text-xs-left">{{ props.item.primaryNumber }}</td>
         <td class="justify-center layout px-0">
-          <v-icon @click="itemDetails" color="#07889B"> fa-file-alt </v-icon>
+          <v-icon @click="itemDetails(props.item.id)" color="#07889B"> fa-file-alt </v-icon>
           <v-icon @click="editItem(props.item.id)" class="editBtn"> edit </v-icon>
           <v-icon @click="dialog=true" color="#ff8700"> delete </v-icon>
         </td>
@@ -66,8 +66,8 @@ export default {
     editItem(id) {
       this.$router.push({ name: 'editContact', params: { id } });
     },
-    itemDetails() {
-      this.$router.push({ name: 'details' });
+    itemDetails(id) {
+      this.$router.push({ name: 'details', params: { id } });
     },
     deleteItem(contact) {
       contactService.DeleteContact(contact.id)

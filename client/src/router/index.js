@@ -26,9 +26,10 @@ const router = new Router({
       component: editContact,
       props: true
     }, {
-      path: '/details',
+      path: '/contacts/:id/details',
       name: 'details',
-      component: Details
+      component: Details,
+      props: true
     }, {
       path: '/login',
       name: 'login',
