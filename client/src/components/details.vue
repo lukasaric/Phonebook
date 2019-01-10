@@ -8,20 +8,21 @@
         <v-card-text>
           <v-layout row>
             <v-flex xs7>
-              <v-card-title primary-title>
-                <div class="contactDetails">
-                  <div class="headline">
-                    <v-icon>person</v-icon>
-                    {{ contact.firstName }} {{ contact.lastName }}
-                  </div>
-                  <div><v-icon>fa fa-envelope</v-icon> {{ contact.email }} </div>
-                </div>
-              </v-card-title>
+              <v-list-tile-content class="infoContainer">
+                <v-list-tile-title>
+                  <v-icon>person</v-icon>
+                  {{ contact.firstName }} {{ contact.lastName }}
+                </v-list-tile-title>
+                <v-list-tile-sub-title class="emailBar">
+                  <v-icon>fa fa-envelope</v-icon>
+                  {{ contact.email }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
             </v-flex>
           </v-layout>
           <v-divider light></v-divider>
           <v-list two-line>
-            <v-list-tile-content>
+            <v-list-tile-content class="primaryNumberContainer">
               <v-list-tile-title> Primary number: </v-list-tile-title>
               <v-list-tile-sub-title>
                 <v-icon>far fa-star</v-icon>
@@ -31,15 +32,17 @@
             </v-list-tile-content>
           </v-list>
           <v-divider light></v-divider>
-          <v-list><v-list-tile-title> All numbers: </v-list-tile-title></v-list>
-          <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
-            <v-list two-line>
-              <v-list-tile-content>
-                <v-list-tile-title><v-icon>phone</v-icon>{{ number.number }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ number.numberType }}</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list>
-          </v-layout>
+          <v-list class="numbersContainer">
+            <v-list-tile-title> All numbers: </v-list-tile-title>
+            <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
+              <v-list two-line>
+                <v-list-tile-content>
+                  <v-list-tile-title><v-icon>phone</v-icon>{{ number.number }}</v-list-tile-title>
+                  <v-list-tile-sub-title>{{ number.numberType }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list>
+            </v-layout>
+          </v-list>
         </v-card-text>
         <v-card-actions>
           <v-btn @click="editItem" flat color="#ff8700">Edit</v-btn>
@@ -64,7 +67,8 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        PhoneNumbers: [ { number: '', numberType: null, isMain: true } ]
+        PhoneNumbers: [ { number: '', numberType: null, isMain: true } ],
+        primaryNumber: ''
       }
     };
   },
@@ -94,6 +98,19 @@ export default {
 </script>
 
 <style scoped>
+.infoContainer {
+  font-size: 28px;
+  padding: 20px;
+}
+.primaryNumberContainer {
+  margin-left: 10px;
+}
+.numbersContainer {
+  margin-left: 10px;
+}
+.emailBar {
+  margin-top: 15px;
+}
 .detailBox {
   font-size: 16px;
 }
