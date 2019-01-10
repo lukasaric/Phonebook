@@ -59,7 +59,7 @@ import { AsYouType } from 'libphonenumber-js';
 
 export default {
   props: {
-    id: { default: 0, type: Number }
+    id: { default: 0, type: [ String, Number ] }
   },
   data() {
     return {

@@ -83,7 +83,7 @@
             color="#07889B"
             required>
           </v-checkbox>
-          <v-icon v-if="index>0" @click="deleteNumber(index)" color="#ff8700"> delete </v-icon>
+          <v-icon v-if="index>=0" @click="deleteNumber(index)" color="#ff8700"> delete </v-icon>
         </v-layout>
         <v-btn @click="submit" color="#07889B" flat outline>submit</v-btn>
         <v-btn @click="dialog = true" flat outline>cancel</v-btn>
@@ -142,7 +142,6 @@ export default {
             this.contact.PhoneNumbers.forEach(el => {
               if (el.isMain === true) this.counter++;
             });
-            console.log(this.counter);
             if (this.counter === 1) {
               contactService.EditContact(this.contact)
                 .then(() => this.$router.push({ name: 'contacts' }))

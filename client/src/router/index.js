@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Contacts from '@/components/Contacts';
-import addContact from '@/components/addContact';
-import editContact from '@/components/editContact';
+import AddContact from '@/components/addContact';
+import EditContact from '@/components/editContact';
 import Details from '@/components/details';
 
 Vue.use(Router);
@@ -16,12 +16,12 @@ const router = new Router({
     }, {
       path: '/addContact',
       name: 'addContact',
-      component: addContact
+      component: AddContact
     },
     {
       path: '/contacts/:id/editContact',
       name: 'editContact',
-      component: editContact,
+      component: EditContact,
       props: true
     }, {
       path: '/contacts/:id/details',
