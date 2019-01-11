@@ -83,7 +83,7 @@
             color="#07889B"
             required>
           </v-checkbox>
-          <v-icon v-if="index>=0" @click="deleteNumber(index)" color="#ff8700"> delete </v-icon>
+          <v-icon v-if="index>=0" @click="deleteNumber(index)" color="error"> delete </v-icon>
         </v-layout>
         <v-btn @click="submit" color="#07889B" flat outline>submit</v-btn>
         <v-btn @click="dialog = true" flat outline>cancel</v-btn>
@@ -97,6 +97,10 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <v-snackbar v-model="snackbar" color="error">
+          There must be at least and only one primary number
+          <v-btn @click="snackbar=false" dark flat >Close</v-btn>
+        </v-snackbar>
       </form>
     </v-card>
   </div>
@@ -116,6 +120,7 @@ export default {
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
+      snackbar: false,
       counter: 0,
       dictionary: {
         attributes: { email: 'E-mail Address', numeric: 'Phone number' },
@@ -145,7 +150,7 @@ export default {
                 .catch(error => console.log(error));
             } else {
               this.counter = 0;
-              console.log('There must be at least one primary number');
+              this.snackbar = true;
             }
           }
         });
@@ -169,7 +174,7 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 40%;
+  max-width: 41%;
   margin: auto;
 }
 .formContainer {

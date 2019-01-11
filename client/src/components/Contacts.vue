@@ -25,15 +25,15 @@
         <td class="justify-center layout px-0">
           <v-icon @click="itemDetails(props.item.id)" color="#07889B"> fa-file-alt </v-icon>
           <v-icon @click="editItem(props.item.id)" class="editBtn"> edit </v-icon>
-          <v-icon @click="dialog=true" color="#ff8700"> delete </v-icon>
+          <v-icon @click="onDialog(props.item)" color="error"> delete </v-icon>
         </td>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
-            <v-card-text> Are you sure you want to delete this contact? </v-card-text>
+            <v-card-text> Are you sure you want to delete {{ contact.firstName }} from contacts? </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn @click="dialog = false" color="#07889B" flat> No </v-btn>
-              <v-btn @click="deleteItem(props.item)" color="#07889B" flat> Yes </v-btn>
+              <v-btn @click="dialog=false" color="#07889B" flat> No </v-btn>
+              <v-btn @click="deleteItem" color="#07889B" flat> Yes </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -42,7 +42,7 @@
             <v-card-text> Are you sure you want to delete all contacts? </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn @click="delAllDialog = false" color="#07889B" flat> No </v-btn>
+              <v-btn @click="delAllDialog=false" color="#07889B" flat> No </v-btn>
               <v-btn @click="deleteAll" color="#07889B" flat> Yes </v-btn>
             </v-card-actions>
           </v-card>
@@ -68,7 +68,8 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Primary number', value: 'number' }
       ],
-      contacts: []
+      contacts: [],
+      contact: {}
     };
   },
   methods: {
@@ -81,10 +82,10 @@ export default {
     itemDetails(id) {
       this.$router.push({ name: 'details', params: { id } });
     },
-    deleteItem(contact) {
-      contactService.DeleteContact(contact.id)
+    deleteItem() {
+      contactService.DeleteContact(this.contact.id)
         .then(res => {
-          const index = this.contacts.indexOf(contact);
+          const index = this.contacts.indexOf(this.contact);
           this.contacts.splice(index, 1);
           this.dialog = false;
         });
@@ -95,6 +96,10 @@ export default {
           this.contacts = [];
           this.delAllDialog = false;
         });
+    },
+    onDialog(contact) {
+      this.contact = contact;
+      this.dialog = true;
     }
   },
   created() {

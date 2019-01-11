@@ -44,9 +44,9 @@
             </v-layout>
           </v-list>
         </v-card-text>
-        <v-card-actions>
-          <v-btn @click="editItem" flat color="#ff8700">Edit</v-btn>
-          <v-btn @click="navigateTo" flat color="#ff8700">Return</v-btn>
+        <v-card-actions class="buttons">
+          <v-btn @click="editItem" color="#07889B" flat outline>Edit</v-btn>
+          <v-btn @click="navigateTo" flat outline>Return</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -113,5 +113,8 @@ export default {
 }
 .detailBox {
   font-size: 16px;
+}
+.buttons {
+  justify-content: center;
 }
 </style>

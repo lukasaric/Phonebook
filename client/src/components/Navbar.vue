@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar fixed class="navbar" dark>
+  <v-toolbar fixed class="navbar" dark color="#0E0B16">
     <v-toolbar-title class="mr-4">
       <div class="navbar-brand">
         <a @click="navigateTo('/contacts')" class="navbar-item">
