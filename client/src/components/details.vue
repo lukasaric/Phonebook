@@ -1,9 +1,9 @@
 <template>
   <v-layout class="mainContainer">
     <v-flex xs12 sm6 offset-sm3>
-      <v-card class="detailBox">
-        <v-toolbar flat light color="teal lighten-5">
-          <v-toolbar-title v-model="contact" class="tableTitle"> Contact details </v-toolbar-title>
+      <v-card class="elevation-12">
+        <v-toolbar flat dark color="#07889B">
+          <v-toolbar-title class="tableTitle"> Contact details </v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-layout row>
@@ -25,7 +25,7 @@
             <v-list-tile-content class="primaryNumberContainer">
               <v-list-tile-title> Primary number: </v-list-tile-title>
               <v-list-tile-sub-title>
-                <v-icon>far fa-star</v-icon>
+                <v-icon color="orange">far fa-star</v-icon>
                 {{ contact.primaryNumber.number }}
               </v-list-tile-sub-title>
               <v-list-tile-sub-title> {{ contact.primaryNumber.numberType }} </v-list-tile-sub-title>
@@ -111,7 +111,7 @@ export default {
 .emailBar {
   margin-top: 15px;
 }
-.detailBox {
+.elevation-12 {
   font-size: 16px;
 }
 .buttons {
