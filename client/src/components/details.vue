@@ -118,5 +118,6 @@ export default {
 }
 .buttons {
   justify-content: center;
+  padding-bottom: 20px;
 }
 </style>

@@ -111,7 +111,7 @@ import contactService from '@/services/contactService';
 
 export default {
   props: {
-    id: { default: 0, type: Number }
+    id: { default: 0, type: [ String, Number ] }
   },
   data() {
     return {
@@ -144,8 +144,8 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            this.contact.PhoneNumbers.forEach(el => {
-              if (el.isMain === true) this.counter++;
+            this.contact.PhoneNumbers.forEach(contact => {
+              if (contact.isMain === true) this.counter++;
             });
             if (this.counter === 1) {
               contactService.EditContact(this.contact)

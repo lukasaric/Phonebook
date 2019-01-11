@@ -7,7 +7,7 @@
         </a>
       </div>
     </v-toolbar-title>
-    <h1>Phonebook</h1>
+    <h1>{{ name }}</h1>
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn @click="navigateTo('/contacts')" flat>Contacts</v-btn>
@@ -20,7 +20,7 @@ export default {
   name: 'navbar',
   data() {
     return {
-      value: ''
+      name: 'Phonebook'
     };
   },
   methods: {
