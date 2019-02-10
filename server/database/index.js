@@ -2,10 +2,9 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
-  host: process.env.DB_HOST,
+const sequelize = new Sequelize(process.env.DB_URL, {
   dialect: process.env.DB_DIALECT,
-  storage: process.env.DB_STORAGE,
+  protocol: process.env.DB_PROTOCOL,
   logging: true,
   port: process.env.DB_PORT
 });
