@@ -33,14 +33,14 @@
         <v-divider light></v-divider>
         <v-list class="numbersContainer">
           <v-list-tile-title> All numbers: </v-list-tile-title>
-          <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
+          <div v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
             <v-list two-line>
               <v-list-tile-content>
                 <v-list-tile-title><v-icon>phone</v-icon>{{ number.number }}</v-list-tile-title>
                 <v-list-tile-sub-title>{{ number.numberType }}</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list>
-          </v-layout>
+          </div>
         </v-list>
       </v-card-text>
       <v-card-actions class="buttons">
