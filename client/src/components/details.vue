@@ -44,8 +44,8 @@
         </v-list>
       </v-card-text>
       <v-card-actions class="buttons">
-        <v-btn @click="editItem" color="#07889B" flat outline>Edit</v-btn>
-        <v-btn @click="navigateTo" flat outline>Return</v-btn>
+        <v-btn @click="editItem" color="#07889B" small flat outline>Edit</v-btn>
+        <v-btn @click="navigateTo" small flat outline>Return</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 .mainContainer {
-  max-width: 30%;
+  max-width: 60%;
   margin: auto;
 }
 .infoContainer {
@@ -114,7 +114,7 @@ export default {
   margin-top: 15px;
 }
 .elevation-12 {
-  font-size: 16px;
+  font-size: 12px;
 }
 .buttons {
   justify-content: center;

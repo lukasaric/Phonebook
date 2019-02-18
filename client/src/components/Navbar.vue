@@ -43,7 +43,7 @@ export default {
   cursor: pointer;
 }
 .navbar-brand .navbar-item img {
-  max-width: 58px;
+  max-width: 50px;
   margin-top:22px;
 }
 </style>
