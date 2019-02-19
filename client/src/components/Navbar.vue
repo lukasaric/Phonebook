@@ -10,7 +10,8 @@
     <h1>{{ name }}</h1>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn @click="navigateTo('/contacts')" flat>Contacts</v-btn>
+      <v-btn @click="navigateTo('/')" flat> Home </v-btn>
+      <v-btn @click="navigateTo('/contacts')" flat> Contacts </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
