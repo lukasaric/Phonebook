@@ -7,10 +7,11 @@
         </a>
       </div>
     </v-toolbar-title>
-    <h1>{{ name }}</h1>
+    <h3> {{ name }} </h3>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn @click="navigateTo('/contacts')" flat>Contacts</v-btn>
+      <v-btn @click="navigateTo('/')" small flat> Home </v-btn>
+      <v-btn @click="navigateTo('/contacts')" small flat> Contacts </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -43,7 +44,7 @@ export default {
   cursor: pointer;
 }
 .navbar-brand .navbar-item img {
-  max-width: 58px;
+  max-width: 50px;
   margin-top:22px;
 }
 </style>

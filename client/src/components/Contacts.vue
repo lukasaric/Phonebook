@@ -13,8 +13,10 @@
         class="searchBox"
         color="#07889B">
       </v-text-field>
-      <v-btn @click="delAllDialog=true" color="#07889B" flat outline > Delete all </v-btn>
-      <v-btn @click="addContact" outline color="#07889B" dark class="mb-2"> Add contact </v-btn>
+      <v-card-actions>
+        <v-btn @click="delAllDialog=true" color="#07889B" small flat outline > Delete all </v-btn>
+        <v-btn @click="addContact" color="#07889B" small flat outline > Add contact </v-btn>
+      </v-card-actions>
     </v-toolbar>
     <v-data-table :headers="headers" :items="contacts" :search="search" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
@@ -122,34 +124,29 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 70%;
+  max-width: 100%;
 }
 .editBtn {
-  margin: 20px;
+  padding: 10px;
   color: #00BCD4;
 }
 .addBtn {
   float: right;
 }
-.isMain {
-  padding-left: 50px;
-  max-width: 30px;
-}
-.numberInput {
-  float: left;
-}
 table.v-table thead tr th {
-  font-size: 16px;
+  font-size: 12px;
+  padding: 10px;
 }
 table.v-table tbody tr td {
-  font-size: 16px;
+  font-size: 12px;
+  padding-left: 20px;
 }
 .tableTitle {
-  font-size: 25px;
+  font-size: 20px;
   color: #07889B
 }
 .searchBox {
   margin-right: 20px;
-  max-width: 400px;
+  max-width: 300px;
 }
 </style>

@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const { sequelize } = require('./database');
 const apiRouter = require('./routes/index');
 const path = require('path');
+const nocache = require('nocache');
 const app = express();
 
 const port = process.env.PORT;
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(nocache());
 
 app.use('/api', apiRouter);
 

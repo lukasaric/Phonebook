@@ -51,10 +51,9 @@ module.exports = {
   DeleteContact: ({ query: { id } }, res, next) => {
     return Contact.find({ where: { id }, include: [ PhoneNumber ] })
       .then(contact => {
-        contact.dataValues.PhoneNumbers.forEach(number => {
-          PhoneNumber.destroy({ where: { id: number.dataValues.id } });
-        });
-        contact.destroy();
+        const Ids = contact.dataValues.PhoneNumbers.map(number => number.id);
+        return PhoneNumber.destroy({ where: { id: Ids } })
+          .then(() => contact.destroy());
       })
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
@@ -62,10 +61,9 @@ module.exports = {
   EditContact: ({ body: { id, firstName, lastName, email, PhoneNumbers } }, res, next) => {
     return Contact.find({ where: { id }, include: [ PhoneNumber ] })
       .then(contact => {
-        contact.dataValues.PhoneNumbers.forEach(number => {
-          PhoneNumber.destroy({ where: { id: number.dataValues.id } });
-        });
-        contact.update({ firstName, lastName, email })
+        const Ids = contact.dataValues.PhoneNumbers.map(number => number.id);
+        return PhoneNumber.destroy({ where: { id: Ids } })
+          .then(() => contact.update({ firstName, lastName, email }))
           .then(contact => {
             return PhoneNumber.bulkCreate(PhoneNumbers.map(phoneNumber => {
               const { number, numberType, isMain } = phoneNumber;

@@ -1,14 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Contacts from '@/components/Contacts';
-import AddContact from '@/components/addContact';
-import EditContact from '@/components/editContact';
-import Details from '@/components/details';
+import AddContact from '@/components/AddContact';
+import EditContact from '@/components/EditContact';
+import Details from '@/components/Details';
+import Home from '@/components/Home';
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
     {
       path: '/contacts',
       name: 'contacts',

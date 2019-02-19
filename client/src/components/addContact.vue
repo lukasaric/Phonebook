@@ -38,16 +38,20 @@
           required>
         </v-text-field>
         <div class="numbersContainer">
-          <v-btn
-            @click="addNumber"
-            class="addBtn"
-            dark
-            small
-            fab
-            color="#07889B"
-            outline>
-            <v-icon dark>add</v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            <v-btn
+              slot="activator"
+              @click="addNumber"
+              class="addBtn"
+              dark
+              small
+              fab
+              color="#07889B"
+              outline>
+              <v-icon dark>add</v-icon>
+            </v-btn>
+            <span>Add number</span>
+          </v-tooltip>
         </div>
         <v-layout v-for="(number, index) in contact.PhoneNumbers" :key="index" row wrap>
           <v-text-field
@@ -83,10 +87,13 @@
             color="#07889B"
             required>
           </v-checkbox>
-          <v-icon v-if="index>=0" @click="deleteNumber(index)" color="error"> delete </v-icon>
+          <v-tooltip right class="delBtn">
+            <v-icon v-if="index>=0" slot="activator" @click="deleteNumber(index)" color="error"> delete </v-icon>
+            <span>Delete number</span>
+          </v-tooltip>
         </v-layout>
-        <v-btn @click="submit" color="#07889B" flat outline>submit</v-btn>
-        <v-btn @click="dialog = true" flat outline>cancel</v-btn>
+        <v-btn @click="submit" color="#07889B" small flat outline>submit</v-btn>
+        <v-btn @click="dialog = true" small flat outline>cancel</v-btn>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
             <v-card-text> Are you sure you want to cancel? </v-card-text>
@@ -174,7 +181,7 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 41%;
+  max-width: 60%;
   margin: auto;
 }
 .formContainer {
@@ -189,12 +196,16 @@ export default {
   margin-left: 20px;
 }
 .numberField {
-  max-width: 50%;
+  max-width: 400px;
 }
 .addBtn {
   margin-left: 20px;
 }
+.delBtn {
+  padding: 18px;
+}
 .isMain {
-  margin-left: 30px;
+  padding-left: 30px;
+  max-width: 310px;
 }
 </style>
