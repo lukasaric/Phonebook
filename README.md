@@ -38,5 +38,5 @@ Create [account](https://customer.elephantsql.com/login) and enter `DB_URL`
 * App is deployed on Heroku.
 * App preview: [Personal-phonebook](https://personal-phonebook.herokuapp.com/#/)
 
-## Frameworks:
+## Frameworks
 Express.js / Vue.js
