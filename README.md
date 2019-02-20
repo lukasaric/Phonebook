@@ -32,7 +32,7 @@ Create [account](https://customer.elephantsql.com/login) and enter `DB_URL`
 
 ### Production
 * Bundle client by issuing `npm run build`
-* `npm run start
+* `npm run start`
 
 ### Deployment
 * App is deployed on Heroku.
