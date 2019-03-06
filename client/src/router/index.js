@@ -5,6 +5,8 @@ import AddContact from '@/components/AddContact';
 import EditContact from '@/components/EditContact';
 import Details from '@/components/Details';
 import Home from '@/components/Home';
+import Register from '@/components/Register';
+import Login from '@/components/Login';
 
 Vue.use(Router);
 
@@ -14,8 +16,15 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
-    {
+    }, {
+      path: '/register',
+      name: 'register',
+      component: Register
+    }, {
+      path: '/login',
+      name: 'login',
+      component: Login
+    }, {
       path: '/contacts',
       name: 'contacts',
       component: Contacts
@@ -23,8 +32,7 @@ const router = new Router({
       path: '/addContact',
       name: 'addContact',
       component: AddContact
-    },
-    {
+    }, {
       path: '/contacts/:id/editContact',
       name: 'editContact',
       component: EditContact,

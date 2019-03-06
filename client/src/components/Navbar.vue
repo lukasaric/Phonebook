@@ -2,7 +2,7 @@
   <v-toolbar fixed class="navbar" dark color="#0E0B16">
     <v-toolbar-title class="mr-4">
       <div class="navbar-brand">
-        <a @click="navigateTo('/contacts')" class="navbar-item">
+        <a @click="navigateTo('home')" class="navbar-item">
           <img src="../assets/logo.png" alt="Phonebook"/>
         </a>
       </div>
@@ -10,8 +10,11 @@
     <h3> {{ name }} </h3>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn @click="navigateTo('/')" small flat> Home </v-btn>
-      <v-btn @click="navigateTo('/contacts')" small flat> Contacts </v-btn>
+      <v-btn v-if="!loggedIn" @click="navigateTo('login')" small flat> Login </v-btn>
+      <v-btn v-if="!loggedIn" @click="navigateTo('register')" small flat> Sign Up </v-btn>
+      <v-btn v-if="!loggedIn" @click="navigateTo('home')" small flat> Home </v-btn>
+      <v-btn v-if="loggedIn" @click="navigateTo('contacts')" small flat> Contacts </v-btn>
+      <v-btn v-if="loggedIn" @click="logout" small flat> Log out </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -24,9 +27,19 @@ export default {
       name: 'Phonebook'
     };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
   methods: {
-    navigateTo(route) {
-      this.$router.push({ path: route });
+    navigateTo(name) {
+      this.$router.push({ name });
+    },
+    logout() {
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/login');
+      });
     }
   }
 };
