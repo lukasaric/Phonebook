@@ -2,11 +2,10 @@
 
 const Contact = require('../database').Contact;
 const PhoneNumber = require('../database').PhoneNumber;
-const { sequelize } = require('../database');
 
 module.exports = {
-  AddContact: ({ body: { firstName, lastName, email, PhoneNumbers } }, res, next) => {
-    return Contact.create({ firstName, lastName, email })
+  AddContact: ({ body: { firstName, lastName, email, PhoneNumbers, UserFk } }, res, next) => {
+    return Contact.create({ firstName, lastName, email, UserFk })
       .then(contact => {
         return PhoneNumber.bulkCreate(PhoneNumbers.map(phoneNumber => {
           const { number, numberType, isMain } = phoneNumber;
@@ -17,8 +16,8 @@ module.exports = {
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
   },
-  GetAllContacts: (req, res, next) => {
-    return Contact.findAll({ include: [ PhoneNumber ] })
+  GetAllContacts: ({ query: { UserFk } }, res, next) => {
+    return Contact.findAll({ where: { UserFk }, include: [ PhoneNumber ] })
       .then(contacts => {
         return contacts.map(contact => {
           const { id, firstName, lastName, email } = contact.dataValues;
@@ -76,7 +75,14 @@ module.exports = {
       .catch(err => next(err));
   },
   DeleteAllContacts: (req, res, next) => {
-    return sequelize.sync({ force: true })
+    const UserFk = req.body.params.UserFk;
+    return Contact.findAll({ where: { UserFk }, include: [ PhoneNumber ] })
+      .then(contacts => {
+        const NumberIds = contacts.map(contact => contact.PhoneNumbers.map(number => number.id));
+        const reducedIds = NumberIds.reduce((acc, cur) => acc.concat(cur), []);
+        return PhoneNumber.destroy({ where: { id: reducedIds } })
+          .then(() => Contact.destroy({ where: { UserFk } }));
+      })
       .then(() => res.sendStatus(200))
       .catch(err => next(err));
   }

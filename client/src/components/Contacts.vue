@@ -71,7 +71,8 @@ export default {
         { text: 'Primary number', value: 'number' }
       ],
       contacts: [],
-      contact: {}
+      contact: {},
+      UserFk: ''
     };
   },
   methods: {
@@ -93,7 +94,7 @@ export default {
         });
     },
     deleteAll() {
-      contactService.DeleteAllContacts()
+      contactService.DeleteAllContacts(this.UserFk)
         .then(res => {
           this.contacts = [];
           this.delAllDialog = false;
@@ -105,7 +106,8 @@ export default {
     }
   },
   created() {
-    contactService.GetAllContacts()
+    this.UserFk = this.$store.state.user.id;
+    contactService.GetAllContacts(this.UserFk)
       .then(res => {
         const contacts = res.data;
         contacts.forEach(contact => {

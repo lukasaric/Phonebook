@@ -10,13 +10,13 @@ export default {
   EditContact(data) {
     return Api.post('/contacts/editContact', data);
   },
-  GetAllContacts() {
-    return Api.get('/contacts/GetAll');
+  GetAllContacts(UserFk) {
+    return Api.get('/contacts/GetAll', { params: { UserFk } });
   },
   GetContact(id) {
     return Api.get(`/contacts/GetContact/${id}`);
   },
-  DeleteAllContacts() {
-    return Api.post('/contacts/DeleteAll');
+  DeleteAllContacts(UserFk) {
+    return Api.post('/contacts/DeleteAll', { params: { UserFk } });
   }
 };
