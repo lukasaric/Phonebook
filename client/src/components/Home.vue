@@ -3,7 +3,7 @@
     <div class="page-content">
       <h1> {{ name }} </h1>
       <p>Simple phonebook for personal use.</p>
-      <v-btn @click="navigateTo" color="#f0932b" large flat outline> Get started </v-btn>
+      <v-btn @click="navigateTo" color="blue-grey lighten-4" large flat outline> Get started </v-btn>
     </div>
   </div>
 </template>
@@ -70,14 +70,5 @@ export default {
 .page-content p {
   color:white;
   margin-bottom: 20px;
-}
-.page-content a{
-  display: inline-block;
-  text-decoration: none;
-  color: #ff7979;
-  border: 2px solid #ff7979;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  transition: 0.4s linear;
 }
 </style>

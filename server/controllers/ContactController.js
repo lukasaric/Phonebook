@@ -79,8 +79,8 @@ module.exports = {
     return Contact.findAll({ where: { UserFk }, include: [ PhoneNumber ] })
       .then(contacts => {
         const NumberIds = contacts.map(contact => contact.PhoneNumbers.map(number => number.id));
-        const reducedIds = NumberIds.reduce((acc, cur) => acc.concat(cur), []);
-        return PhoneNumber.destroy({ where: { id: reducedIds } })
+        const flattenedIds = NumberIds.reduce((acc, cur) => acc.concat(cur), []);
+        return PhoneNumber.destroy({ where: { id: flattenedIds } })
           .then(() => Contact.destroy({ where: { UserFk } }));
       })
       .then(() => res.sendStatus(200))
