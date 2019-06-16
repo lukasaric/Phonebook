@@ -123,7 +123,8 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        PhoneNumbers: [ { number: '', numberType: null, isMain: true } ]
+        PhoneNumbers: [ { number: '', numberType: null, isMain: true } ],
+        UserFk: ''
       },
       types: [ 'Fax', 'Private', 'Business' ],
       dialog: false,
@@ -174,6 +175,8 @@ export default {
     }
   },
   mounted() {
+    const UserFk = this.$store.state.user.id;
+    Object.assign(this.contact, { UserFk });
     this.$validator.localize('en', this.dictionary);
   }
 };

@@ -15,7 +15,7 @@ npm-debug.log*
 .vscode
 
 # Build artifacts
-client/dist/
+client/dist
 
 # General
 .DS_Store
