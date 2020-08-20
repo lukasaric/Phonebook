@@ -32,7 +32,7 @@
   "homepage": "https://github.com/ExtensionEngine/project-rozga",
   "dependencies": {
     "axios": "^0.18.0",
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
