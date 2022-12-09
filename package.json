@@ -37,7 +37,7 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "event-stream": "^3.3.4",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "flatmap-stream": "0.0.1-security",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.3.0",
